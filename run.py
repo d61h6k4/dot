@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 
 import logging
-import os
 import pathlib
 import platform
 
 
 def get_script_path() -> pathlib.Path:
-    return pathlib.Path(os.getcwd()) / __file__
+    return pathlib.Path.cwd() / __file__
 
 
 def copy_tmux_config(dot_folder: pathlib.Path):
