@@ -22,7 +22,7 @@ def eval_os_cmd(cmd: str) -> (int, str):
   if proc.returncode:
     return proc.returncode, f'Evaluation of {cmd} raised the error {stderr}'
   else:
-    return proc.returncode, stderr
+    return proc.returncode, stdout
 
 
 def install_brew():
