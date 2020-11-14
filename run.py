@@ -111,8 +111,8 @@ def copy_zsh_config(dot_folder: pathlib.Path):
 def install_fira_code():
   logging.debug("Installing fira code...")
   if platform.system() == 'Linux':
-    rcode, _ = eval_os_cmd("apt list fonts-firacode")
-    if rcode:
+    rcode, _ = eval_os_cmd("apt list --installed fonts-firacode")
+    if not rcode and len(msg.decode('utf8').rstrip().split('\n')) == 1:
       rcode, msg = eval_os_cmd("sudo apt install -y fonts-firacode")
       if rcode:
         logging.critical(msg)
@@ -142,8 +142,8 @@ def install_dircolors():
 def install_zsh():
   logging.debug("Installing zsh...")
   if platform.system() == 'Linux':
-    rcode, _ = eval_os_cmd("apt list zsh")
-    if rcode:
+    rcode, _ = eval_os_cmd("apt list --installed zsh")
+    if not rcode and len(msg.decode('utf8').rstrip().split('\n')) == 1:
       rcode, msg = eval_os_cmd("sudo apt install zsh")
       if rcode:
         logging.critical(msg)
@@ -198,8 +198,8 @@ def install_exa():
       if rcode:
         logging.warn(msg)
   elif platform.system() == 'Linux':
-    rcode, _ = eval_os_cmd('apt list exa')
-    if rcode:
+    rcode, _ = eval_os_cmd("apt list --installed exa")
+    if not rcode and len(msg.decode('utf8').rstrip().split('\n')) == 1:
       rcode, msg = eval_os_cmd('sudo apt install exa')
       if rcode:
         logging.critical(msg)
@@ -215,8 +215,8 @@ def install_fd():
       if rcode:
         logging.warn(msg)
   elif platform.system() == 'Linux':
-    rcode, _ = eval_os_cmd('apt list fd-find')
-    if rcode:
+    rcode, _ = eval_os_cmd("apt list --installed fd-find")
+    if not rcode and len(msg.decode('utf8').rstrip().split('\n')) == 1:
       rcode, msg = eval_os_cmd("sudo apt install -y fd-find")
       if rcode:
         logging.critical(msg)
@@ -232,8 +232,8 @@ def install_bat():
       if rcode:
         logging.warn(msg)
   elif platform.system() == 'Linux':
-    rcode, _ = eval_os_cmd('apt list bat')
-    if rcode:
+    rcode, _ = eval_os_cmd("apt list --installed bat")
+    if not rcode and len(msg.decode('utf8').rstrip().split('\n')) == 1:
       rcode, msg = eval_os_cmd('sudo apt install -y bat')
       if rcode:
         logging.critical(msg)
