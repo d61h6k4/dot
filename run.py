@@ -111,7 +111,7 @@ def copy_zsh_config(dot_folder: pathlib.Path):
 def install_fira_code():
   logging.debug("Installing fira code...")
   if platform.system() == 'Linux':
-    rcode, _ = eval_os_cmd("apt list --installed fonts-firacode")
+    rcode, msg = eval_os_cmd("apt list --installed fonts-firacode")
     if not rcode and len(msg.decode('utf8').rstrip().split('\n')) == 1:
       rcode, msg = eval_os_cmd("sudo apt install -y fonts-firacode")
       if rcode:
@@ -142,7 +142,7 @@ def install_dircolors():
 def install_zsh():
   logging.debug("Installing zsh...")
   if platform.system() == 'Linux':
-    rcode, _ = eval_os_cmd("apt list --installed zsh")
+    rcode, msg = eval_os_cmd("apt list --installed zsh")
     if not rcode and len(msg.decode('utf8').rstrip().split('\n')) == 1:
       rcode, msg = eval_os_cmd("sudo apt install zsh")
       if rcode:
@@ -198,7 +198,7 @@ def install_exa():
       if rcode:
         logging.warn(msg)
   elif platform.system() == 'Linux':
-    rcode, _ = eval_os_cmd("apt list --installed exa")
+    rcode, msg = eval_os_cmd("apt list --installed exa")
     if not rcode and len(msg.decode('utf8').rstrip().split('\n')) == 1:
       rcode, msg = eval_os_cmd('sudo apt install exa')
       if rcode:
@@ -215,7 +215,7 @@ def install_fd():
       if rcode:
         logging.warn(msg)
   elif platform.system() == 'Linux':
-    rcode, _ = eval_os_cmd("apt list --installed fd-find")
+    rcode, msg = eval_os_cmd("apt list --installed fd-find")
     if not rcode and len(msg.decode('utf8').rstrip().split('\n')) == 1:
       rcode, msg = eval_os_cmd("sudo apt install -y fd-find")
       if rcode:
@@ -232,7 +232,7 @@ def install_bat():
       if rcode:
         logging.warn(msg)
   elif platform.system() == 'Linux':
-    rcode, _ = eval_os_cmd("apt list --installed bat")
+    rcode, msg = eval_os_cmd("apt list --installed bat")
     if not rcode and len(msg.decode('utf8').rstrip().split('\n')) == 1:
       rcode, msg = eval_os_cmd('sudo apt install -y bat')
       if rcode:
