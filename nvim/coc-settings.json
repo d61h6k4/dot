@@ -36,5 +36,8 @@
     "default": "\uf29c"
   },
   "python.pythonPath": "python",
-  "python.jediEnabled": false
+  "python.jediEnabled": false,
+  "clangd.enabled": true,
+  "clangd.checkUpdates": true,
+  "clangd.semanticHighlighting": true
 }
