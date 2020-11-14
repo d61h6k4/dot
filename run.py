@@ -147,7 +147,7 @@ def install_zsh():
   if platform.system() == 'Linux':
     rcode, msg = eval_os_cmd("apt list --installed zsh")
     if not rcode and len(msg.decode('utf8').rstrip().split('\n')) == 1:
-      rcode, msg = eval_os_cmd("sudo apt install zsh")
+      rcode, msg = eval_os_cmd("sudo apt install -y zsh")
       if rcode:
         logging.critical(msg)
     eval_os_cmd("chsh -s $(which zsh)")
@@ -203,7 +203,7 @@ def install_exa():
   elif platform.system() == 'Linux':
     rcode, msg = eval_os_cmd("apt list --installed exa")
     if not rcode and len(msg.decode('utf8').rstrip().split('\n')) == 1:
-      rcode, msg = eval_os_cmd('sudo apt install exa')
+      rcode, msg = eval_os_cmd('sudo apt install -y exa')
       if rcode:
         logging.critical(msg)
 
