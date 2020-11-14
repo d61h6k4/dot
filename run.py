@@ -17,9 +17,12 @@ def eval_os_cmd(cmd: str) -> (int, str):
   proc = subprocess.Popen(shlex.split(cmd),
                           stdout=subprocess.PIPE,
                           stderr=subprocess.PIPE)
-  _, stderr = proc.communicate()
+  stdout, stderr = proc.communicate()
 
-  return proc.returncode, f'Evaluation of {cmd} raised the error {stderr}'
+  if proc.returncode:
+    return proc.returncode, f'Evaluation of {cmd} raised the error {stderr}'
+  else:
+    return proc.returncode, stderr
 
 
 def install_brew():
