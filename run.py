@@ -150,7 +150,9 @@ def install_zsh():
       rcode, msg = eval_os_cmd("sudo apt install -y zsh")
       if rcode:
         logging.critical(msg)
-    eval_os_cmd("chsh -s $(which zsh)")
+    rcode, msg = eval_os_cmd("chsh -s $(which zsh)")
+    if rcode:
+        logging.critical(msg)
   elif platform.system() == 'Darwin':
     logging.info("MacOS X uses zsh by default")
   else:
