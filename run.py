@@ -46,6 +46,17 @@ def install_git():
     raise ValueError(f'{platform.system()} is not supported')
 
 
+def install_curl():
+  if platform.system() == 'Darwin':
+    if shutil.which('curl') is None:
+      eval_os_cmd('brew install curl')
+  elif platform.system() == 'Linux':
+    if shutil.which('curl') is None:
+      eval_os_cmd('sudo apt install -y curl')
+  else:
+    raise ValueError(f'{platform.system()} is not supported')
+
+
 def copy_tmux_config(dot_folder: pathlib.Path):
   logging.debug('Installing tmux config ...')
   tmux_conf_src = dot_folder / 'tmux.conf'
@@ -150,13 +161,47 @@ def install_zsh():
       rcode, msg = eval_os_cmd("sudo apt install -y zsh")
       if rcode:
         logging.critical(msg)
-    rcode, msg = eval_os_cmd("chsh -s $(which zsh)")
+    rcode, msg = eval_os_cmd("chsh -s $(which zsh) dbihbka")
     if rcode:
         logging.critical(msg)
   elif platform.system() == 'Darwin':
     logging.info("MacOS X uses zsh by default")
   else:
     raise ValueError(f'{platform.system()} platform is not supported yet')
+
+
+def install_kitty():
+  logging.debug("Installing kitty...")
+  if platform.system() == 'Linux':
+    rcode, msg = eval_os_cmd("apt list --installed kitty")
+    if not rcode and len(msg.decode('utf8').rstrip().split('\n')) == 1:
+      rcode, msg = eval_os_cmd("sudo apt install -y kitty")
+      if rcode:
+        logging.critical(msg)
+  elif platform.system() == 'Darwin':
+    logging.info("with use iTerm2 in MacOS X usually")
+  else:
+    raise ValueError(f'{platform.system()} platform is not supported yet')
+
+
+def install_vim_plug():
+  eval_os_cmd('curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
+       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
+
+
+def install_node():
+  if shutil.which('git') is None:
+    eval_os_cmd('curl -sL install-node.now.sh/lts | sudo bash')
+
+def install_neovim():
+  if platform.system() == 'Darwin':
+    if shutil.which('nvim') is None:
+      eval_os_cmd('brew install neovim')
+  elif platform.system() == 'Linux':
+    if shutil.which('nvim') is None:
+      eval_os_cmd('sudo apt install -y neovim')
+  else:
+    raise ValueError(f'{platform.system()} is not supported')
 
 
 def install_zsh_plugins():
@@ -275,6 +320,8 @@ def generate_alaises(dot_folder):
 def main():
   dot_folder = get_script_path().parent
 
+  install_git()
+  install_curl()
   install_fira_code()
   install_zsh()
   install_zsh_plugins()
@@ -283,6 +330,10 @@ def main():
   install_dircolors()
   install_fd()
   install_bat()
+  install_kitty()
+  install_node()
+  install_vim_plug()
+  install_neovim()
 
   generate_alaises(dot_folder)
 
