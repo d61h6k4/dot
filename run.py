@@ -185,13 +185,17 @@ def install_kitty():
 
 
 def install_vim_plug():
-  eval_os_cmd('curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs \
-       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
+  logging.info("Install vim plug...")
+  config_folder = pathlib.Path.home() / ".local/share"
+  logging.critical(f'curl -fLo {config_folder}/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim')
 
 
 def install_node():
-  if shutil.which('git') is None:
-    eval_os_cmd('curl -sL install-node.now.sh/lts | sudo bash')
+  logging.info("Installing node...")
+  if shutil.which('node') is None:
+    rcode, msg = eval_os_cmd('curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash - && sudo apt-get install -y nodejs')
+    if rcode:
+        logging.critical(msg)
 
 def install_neovim():
   if platform.system() == 'Darwin':
@@ -202,6 +206,17 @@ def install_neovim():
       eval_os_cmd('sudo apt install -y neovim')
   else:
     raise ValueError(f'{platform.system()} is not supported')
+
+def install_tmux():
+  if platform.system() == 'Darwin':
+    if shutil.which('tmux') is None:
+      eval_os_cmd('brew install tmux')
+  elif platform.system() == 'Linux':
+    if shutil.which('tmux') is None:
+      eval_os_cmd('sudo apt install -y tmux')
+  else:
+    raise ValueError(f'{platform.system()} is not supported')
+
 
 
 def install_zsh_plugins():
@@ -334,6 +349,7 @@ def main():
   install_node()
   install_vim_plug()
   install_neovim()
+  install_tmux()
 
   generate_alaises(dot_folder)
 
