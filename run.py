@@ -317,9 +317,9 @@ def generate_alaises(dot_folder):
       dircolors_cmd = 'dircolors=dircolors'
       cat_cmd = 'cat=batcat'
     ls_cmd = 'ls=exa'
-    find_cmd = 'find=fd'
+    find_cmd = 'find=fdfind'
     src.write('\n'.join(
-        [f'alias {cmd}' for cmd in [ls_cmd, dircolors_cmd, find_cmd]]))
+        [f'alias {cmd}' for cmd in [ls_cmd, dircolors_cmd, find_cmd, cat_cmd]]))
 
   if alias_conf_dst.exists():
     if alias_conf_dst.is_symlink() and alias_conf_dst.resolve(
