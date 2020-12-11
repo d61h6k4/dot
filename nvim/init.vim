@@ -36,6 +36,8 @@ Plug 'google/vim-glaive'
 
 Plug 'jackguo380/vim-lsp-cxx-highlight'
 
+Plug 'vhdirk/vim-cmake'
+
 call plug#end()
 
 filetype plugin indent on
