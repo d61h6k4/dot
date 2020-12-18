@@ -98,6 +98,9 @@ set shortmess+=c
 " always show signcolumns
 set signcolumn=yes
 
+" highlight trailing whitespaces
+set listchars=trail:-
+
 let g:coc_global_extensions = ["coc-python",
             \ "coc-json",
             \ "coc-prettier",
@@ -216,7 +219,7 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 augroup autoformat_settings
   autocmd FileType bzl AutoFormatBuffer buildifier
-  autocmd FileType c,cpp,proto,javascript,arduino AutoFormatBuffer clang-format
+  "  autocmd FileType c,cpp,proto,javascript,arduino AutoFormatBuffer clang-format
   autocmd FileType dart AutoFormatBuffer dartfmt
   autocmd FileType go AutoFormatBuffer gofmt
   autocmd FileType gn AutoFormatBuffer gn
