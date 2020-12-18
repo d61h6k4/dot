@@ -191,9 +191,10 @@ def install_vim_plug():
 
 
 def install_node():
-  logging.info("Installing node...")
+  # list of useful nvm commands: https://github.com/nvm-sh/nvm#usage
+  logging.info("Installing node via NVM...")
   if shutil.which('node') is None:
-    rcode, msg = eval_os_cmd('curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash - && sudo apt-get install -y nodejs')
+    rcode, msg = eval_os_cmd('curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash && nvm use stable')
     if rcode:
         logging.critical(msg)
 
