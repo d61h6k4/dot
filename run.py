@@ -324,11 +324,12 @@ def generate_alaises(dot_folder, aliases):
         if platform.system() == 'Darwin':
             dircolors_cmd = 'dircolors=gdircolors'
             cat_cmd = 'cat=bat'
+            find_cmd = 'find=fd'
         elif platform.system() == 'Linux':
             dircolors_cmd = 'dircolors=dircolors'
             cat_cmd = 'cat=batcat'
+            find_cmd = 'find=fdfind'
         ls_cmd = 'ls=exa'
-        find_cmd = 'find=fdfind'
         src.write('\n'.join([
             f'alias {cmd}' for cmd in aliases +
             [ls_cmd, dircolors_cmd, find_cmd, cat_cmd]
