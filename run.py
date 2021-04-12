@@ -14,6 +14,7 @@ def get_script_path() -> pathlib.Path:
 
 
 def eval_os_cmd(cmd: str) -> (int, str):
+    logging.debug(shlex.split(cmd))
     proc = subprocess.Popen(shlex.split(cmd),
                             stdout=subprocess.PIPE,
                             stderr=subprocess.PIPE)
@@ -83,7 +84,8 @@ def copy_neovim_config(dot_folder: pathlib.Path):
         if neovim_conf_dst.is_symlink() and neovim_conf_dst.resolve(
         ) == neovim_conf_src:
             logging.info(
-                f'{neovim_conf_dst} is alread symlink to the {neovim_conf_src}')
+                f'{neovim_conf_dst} is alread symlink to the {neovim_conf_src}'
+            )
         else:
             raise ValueError(f'{neovim_conf_dst} exists.')
     else:
@@ -117,7 +119,8 @@ def copy_zsh_config(dot_folder: pathlib.Path):
     zsh_conf_dst = pathlib.Path.home() / '.zshrc'
 
     if zsh_conf_dst.exists():
-        if zsh_conf_dst.is_symlink() and zsh_conf_dst.resolve() == zsh_conf_src:
+        if zsh_conf_dst.is_symlink() and zsh_conf_dst.resolve(
+        ) == zsh_conf_src:
             logging.info(
                 f'{zsh_conf_dst} is alread symlink to the {zsh_conf_src}')
         else:
@@ -331,8 +334,8 @@ def generate_alaises(dot_folder, aliases):
             find_cmd = 'find=fdfind'
         ls_cmd = 'ls=exa'
         src.write('\n'.join([
-            f'alias {cmd}' for cmd in aliases +
-            [ls_cmd, dircolors_cmd, find_cmd, cat_cmd]
+            f'alias {cmd}'
+            for cmd in aliases + [ls_cmd, dircolors_cmd, find_cmd, cat_cmd]
         ]))
 
     if alias_conf_dst.exists():
@@ -353,11 +356,12 @@ def install_bazel_compilation_database(dot_folder):
     """
 
     bin_folder = dot_folder / "bin"
-    bin_folder.mkdir()
+    if not bin_folder.exists():
+        bin_folder.mkdir()
 
     install_dir = str(bin_folder)
     version = "0.4.5"
-    cmd = f'cd "{install_dir}" && curl -L "https://github.com/grailbio/bazel-compilation-database/archive/{version}.tar.gz" | tar -xz'
+    cmd = f'/bin/bash -c "$(curl -L https://github.com/grailbio/bazel-compilation-database/archive/{version}.tar.gz | tar --directory {install_dir} -xz)"'
 
     logging.debug(cmd)
 
