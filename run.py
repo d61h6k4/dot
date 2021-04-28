@@ -203,7 +203,7 @@ def install_node():
     logging.info("Installing node via NVM...")
     if shutil.which('node') is None:
         rcode, msg = eval_os_cmd(
-            'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | bash && nvm use stable'
+            'curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash && nvm use stable'
         )
         if rcode:
             logging.critical(msg)
