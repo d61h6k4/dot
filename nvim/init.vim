@@ -105,7 +105,8 @@ let g:coc_global_extensions = ["coc-python",
             \ "coc-json",
             \ "coc-prettier",
             \ "coc-vetur",
-            \ "coc-clangd"]
+            \ "coc-clangd",
+            \ "coc-pyright"]
 
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
@@ -219,7 +220,7 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 augroup autoformat_settings
   autocmd FileType bzl AutoFormatBuffer buildifier
-  autocmd FileType c,cpp,proto,javascript,arduino AutoFormatBuffer clang-format
+  " autocmd FileType c,cpp,proto,javascript,arduino AutoFormatBuffer clang-format
   autocmd FileType dart AutoFormatBuffer dartfmt
   autocmd FileType go AutoFormatBuffer gofmt
   autocmd FileType gn AutoFormatBuffer gn
