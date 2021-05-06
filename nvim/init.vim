@@ -38,6 +38,8 @@ Plug 'jackguo380/vim-lsp-cxx-highlight'
 
 Plug 'vhdirk/vim-cmake'
 
+Plug 'antoyo/vim-licenses'
+
 call plug#end()
 
 filetype plugin indent on
@@ -220,14 +222,13 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 augroup autoformat_settings
   autocmd FileType bzl AutoFormatBuffer buildifier
-  " autocmd FileType c,cpp,proto,javascript,arduino AutoFormatBuffer clang-format
+  autocmd FileType c,cpp,proto,javascript,arduino AutoFormatBuffer clang-format
   autocmd FileType dart AutoFormatBuffer dartfmt
   autocmd FileType go AutoFormatBuffer gofmt
   autocmd FileType gn AutoFormatBuffer gn
   autocmd FileType html,css,sass,scss,less,json AutoFormatBuffer js-beautify
   autocmd FileType java AutoFormatBuffer google-java-format
   autocmd FileType python AutoFormatBuffer yapf
-  " Alternative: autocmd FileType python AutoFormatBuffer autopep8
   autocmd FileType rust AutoFormatBuffer rustfmt
   autocmd FileType vue AutoFormatBuffer prettier
 augroup END
@@ -245,4 +246,8 @@ let airline#extensions#coc#stl_format_warn = '%W{[%w(#%fw)]}'
 " Configure error/warning section to use coc.nvim
 let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
 let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
-"let g:airline_theme = '<set to something sexy>'
+
+
+let g:licenses_copyright_holders_name = 'Petrov, Danil <ddbihbka@gmail.com>'
+let g:licenses_authors_name = 'Petrov, Danil <ddbihbka@gmail.com>'
+let g:licenses_default_commands = ['apache']
