@@ -103,8 +103,7 @@ set signcolumn=yes
 " highlight trailing whitespaces
 set listchars=trail:-
 
-let g:coc_global_extensions = ["coc-python",
-            \ "coc-json",
+let g:coc_global_extensions = ["coc-json",
             \ "coc-prettier",
             \ "coc-vetur",
             \ "coc-clangd",
