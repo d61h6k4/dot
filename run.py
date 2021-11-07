@@ -84,11 +84,30 @@ def copy_neovim_config(dot_folder: pathlib.Path):
         if neovim_conf_dst.is_symlink() and neovim_conf_dst.resolve(
         ) == neovim_conf_src:
             logging.info(
-                f'{neovim_conf_dst} is alread symlink to the {neovim_conf_src}')
+                f'{neovim_conf_dst} is alread symlink to the {neovim_conf_src}'
+            )
         else:
             raise ValueError(f'{neovim_conf_dst} exists.')
     else:
         neovim_conf_dst.symlink_to(neovim_conf_src)
+
+
+def copy_git_message(dot_folder: pathlib.Path):
+    logging.debug('Installing git message...')
+
+    gitmessage_src = dot_folder / 'gitmessage'
+    gitmessage_dst = pathlib.Path.home() / '.gitmessage'
+
+    if gitmessage_dst.exists():
+        if gitmessage_dst.is_symlink() and gitmessage_dst.resolve(
+        ) == gitmessage_src:
+            logging.info(
+                f'{gitmessage_dst} is alread symlink to the {gitmessage_src}')
+        else:
+            raise ValueError(f'{gitmessage_dst} exists.')
+    else:
+        gitmessage_dst.symlink_to(gitmessage_src)
+    eval_os_cmd('git config --global commit.template ~/.gitmessage')
 
 
 def copy_kitty_config(dot_folder: pathlib.Path):
@@ -118,7 +137,8 @@ def copy_zsh_config(dot_folder: pathlib.Path):
     zsh_conf_dst = pathlib.Path.home() / '.zshrc'
 
     if zsh_conf_dst.exists():
-        if zsh_conf_dst.is_symlink() and zsh_conf_dst.resolve() == zsh_conf_src:
+        if zsh_conf_dst.is_symlink() and zsh_conf_dst.resolve(
+        ) == zsh_conf_src:
             logging.info(
                 f'{zsh_conf_dst} is alread symlink to the {zsh_conf_src}')
         else:
@@ -332,8 +352,8 @@ def generate_alaises(dot_folder, aliases):
             find_cmd = 'find=fdfind'
         ls_cmd = 'ls=exa'
         src.write('\n'.join([
-            f'alias {cmd}' for cmd in aliases +
-            [ls_cmd, dircolors_cmd, find_cmd, cat_cmd]
+            f'alias {cmd}'
+            for cmd in aliases + [ls_cmd, dircolors_cmd, find_cmd, cat_cmd]
         ]))
 
     if alias_conf_dst.exists():
@@ -400,6 +420,7 @@ def main():
     copy_zsh_config(dot_folder)
     copy_tmux_config(dot_folder)
     copy_neovim_config(dot_folder)
+    copy_git_message(dot_folder)
 
     if platform.system() == 'Linux':
         copy_kitty_config(dot_folder)
