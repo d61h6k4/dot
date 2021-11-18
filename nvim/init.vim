@@ -40,6 +40,8 @@ Plug 'vhdirk/vim-cmake'
 
 Plug 'antoyo/vim-licenses'
 
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+
 call plug#end()
 
 filetype plugin indent on
@@ -201,6 +203,10 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " Add status line support, for integration with other plugin, checkout `:h coc-status`
 set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
+set foldmethod=expr
+set foldexpr=nvim_treesitter#foldexpr()
+
+
 " Using CocList
 " Show all diagnostics
 nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
@@ -219,19 +225,6 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
-augroup autoformat_settings
-  autocmd FileType bzl AutoFormatBuffer buildifier
-  autocmd FileType c,cpp,proto,javascript,arduino AutoFormatBuffer clang-format
-  autocmd FileType dart AutoFormatBuffer dartfmt
-  autocmd FileType go AutoFormatBuffer gofmt
-  autocmd FileType gn AutoFormatBuffer gn
-  autocmd FileType html,css,sass,scss,less,json AutoFormatBuffer js-beautify
-  autocmd FileType java AutoFormatBuffer google-java-format
-  autocmd FileType python AutoFormatBuffer yapf
-  autocmd FileType rust AutoFormatBuffer rustfmt
-  autocmd FileType vue AutoFormatBuffer prettier
-augroup END
-
 
 " air-line
 let g:airline_powerline_fonts = 1
@@ -247,6 +240,11 @@ let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_er
 let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
 
 
-let g:licenses_copyright_holders_name = 'Petrov, Danil <ddbihbka@gmail.com>'
-let g:licenses_authors_name = 'Petrov, Danil <ddbihbka@gmail.com>'
+" let g:licenses_copyright_holders_name = 'Petrov, Danil <ddbihbka@gmail.com>. All Rights Reserved.'
+" let g:licenses_authors_name = 'Petrov, Danil <ddbihbka@gmail.com>'
+
+let g:licenses_copyright_holders_name = 'Arrival Robotics Limited. All Rights Reserved.'
+let g:licenses_authors_name = ''
+
 let g:licenses_default_commands = ['apache']
+
