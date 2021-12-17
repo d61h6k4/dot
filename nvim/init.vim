@@ -25,6 +25,7 @@ Plug 'numirias/semshi', {'do': ':UpdateRemotePlugins'}
 Plug 'Vimjas/vim-python-pep8-indent'
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 " Add maktaba and codefmt to the runtimepath.
 " (The latter must be installed before it can be used.)
@@ -240,11 +241,11 @@ let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_er
 let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
 
 
-" let g:licenses_copyright_holders_name = 'Petrov, Danil <ddbihbka@gmail.com>. All Rights Reserved.'
-" let g:licenses_authors_name = 'Petrov, Danil <ddbihbka@gmail.com>'
+let g:licenses_copyright_holders_name = 'Petrov, Danil <ddbihbka@gmail.com>. All Rights Reserved.'
+let g:licenses_authors_name = 'Petrov, Danil <ddbihbka@gmail.com>'
 
-let g:licenses_copyright_holders_name = 'Arrival Robotics Limited. All Rights Reserved.'
-let g:licenses_authors_name = ''
+" let g:licenses_copyright_holders_name = 'Arrival Robotics Limited. All Rights Reserved.'
+" let g:licenses_authors_name = ''
 
 let g:licenses_default_commands = ['apache']
 
