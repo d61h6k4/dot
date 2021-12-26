@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+from __future__ import annotations
+
 import logging
 import pathlib
 import platform
@@ -13,7 +15,7 @@ def get_script_path() -> pathlib.Path:
     return pathlib.Path.cwd() / __file__
 
 
-def eval_os_cmd(cmd: str) -> (int, str):
+def eval_os_cmd(cmd: str) -> tuple[int, str]:
     logging.debug(shlex.split(cmd))
     proc = subprocess.Popen(shlex.split(cmd),
                             stdout=subprocess.PIPE,
@@ -23,7 +25,7 @@ def eval_os_cmd(cmd: str) -> (int, str):
     if proc.returncode:
         return proc.returncode, f'Evaluation of {cmd} raised the error {stderr}'
     else:
-        return proc.returncode, stdout
+        return proc.returncode, stdout.decode('utf8')
 
 
 def install_brew():
@@ -151,7 +153,7 @@ def install_fira_code():
     logging.debug("Installing fira code...")
     if platform.system() == 'Linux':
         rcode, msg = eval_os_cmd("apt list --installed fonts-firacode")
-        if not rcode and len(msg.decode('utf8').rstrip().split('\n')) == 1:
+        if not rcode and len(msg.rstrip().split('\n')) == 1:
             rcode, msg = eval_os_cmd("sudo apt install -y fonts-firacode")
             if rcode:
                 logging.critical(msg)
@@ -183,7 +185,7 @@ def install_zsh():
     logging.debug("Installing zsh...")
     if platform.system() == 'Linux':
         rcode, msg = eval_os_cmd("apt list --installed zsh")
-        if not rcode and len(msg.decode('utf8').rstrip().split('\n')) == 1:
+        if not rcode and len(msg.rstrip().split('\n')) == 1:
             rcode, msg = eval_os_cmd("sudo apt install -y zsh")
             if rcode:
                 logging.critical(msg)
@@ -200,7 +202,7 @@ def install_kitty():
     logging.debug("Installing kitty...")
     if platform.system() == 'Linux':
         rcode, msg = eval_os_cmd("apt list --installed kitty")
-        if not rcode and len(msg.decode('utf8').rstrip().split('\n')) == 1:
+        if not rcode and len(msg.rstrip().split('\n')) == 1:
             rcode, msg = eval_os_cmd("sudo apt install -y kitty")
             if rcode:
                 logging.critical(msg)
@@ -232,7 +234,7 @@ def install_node():
 def install_neovim():
     if platform.system() == 'Darwin':
         if shutil.which('nvim') is None:
-            eval_os_cmd('brew install neovim')
+            eval_os_cmd('brew install --fetch-HEAD tree-sitter luajit neovim')
     elif platform.system() == 'Linux':
         if shutil.which('nvim') is None:
             eval_os_cmd('sudo apt install -y neovim')
@@ -296,7 +298,7 @@ def install_exa():
                 logging.warn(msg)
     elif platform.system() == 'Linux':
         rcode, msg = eval_os_cmd("apt list --installed exa")
-        if not rcode and len(msg.decode('utf8').rstrip().split('\n')) == 1:
+        if not rcode and len(msg.rstrip().split('\n')) == 1:
             rcode, msg = eval_os_cmd('sudo apt install -y exa')
             if rcode:
                 logging.critical(msg)
@@ -313,7 +315,7 @@ def install_fd():
                 logging.warn(msg)
     elif platform.system() == 'Linux':
         rcode, msg = eval_os_cmd("apt list --installed fd-find")
-        if not rcode and len(msg.decode('utf8').rstrip().split('\n')) == 1:
+        if not rcode and len(msg.rstrip().split('\n')) == 1:
             rcode, msg = eval_os_cmd("sudo apt install -y fd-find")
             if rcode:
                 logging.critical(msg)
@@ -330,7 +332,7 @@ def install_bat():
                 logging.warn(msg)
     elif platform.system() == 'Linux':
         rcode, msg = eval_os_cmd("apt list --installed bat")
-        if not rcode and len(msg.decode('utf8').rstrip().split('\n')) == 1:
+        if not rcode and len(msg.rstrip().split('\n')) == 1:
             rcode, msg = eval_os_cmd('sudo apt install -y bat')
             if rcode:
                 logging.critical(msg)
@@ -350,6 +352,10 @@ def generate_alaises(dot_folder, aliases):
             dircolors_cmd = 'dircolors=dircolors'
             cat_cmd = 'cat=batcat'
             find_cmd = 'find=fdfind'
+        else:
+            dircolors_cmd = 'dircolors=dircolors'
+            cat_cmd = 'cat=cat'
+            find_cmd = 'find=find'
         ls_cmd = 'ls=exa'
         src.write('\n'.join([
             f'alias {cmd}'
@@ -427,7 +433,6 @@ def main():
 
 
 if __name__ == "__main__":
-    import sys
     try:
         from rich.logging import RichHandler
     except ImportError:
