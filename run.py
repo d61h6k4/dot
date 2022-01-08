@@ -253,6 +253,59 @@ def install_tmux():
         raise ValueError(f"{platform.system()} is not supported")
 
 
+def install_diff():
+    if platform.system() == "Darwin":
+        if shutil.which("diff-so-fancy") is None:
+            eval_os_cmd("brew install diff-so-fancy")
+    elif platform.system() == "Linux":
+        if shutil.which("diff-so-fancy") is None:
+            eval_os_cmd("sudo apt install -y diff-so-fancy")
+    else:
+        raise ValueError(f"{platform.system()} is not supported")
+    # postinstall usage
+    # https://github.com/so-fancy/diff-so-fancy#usage
+    commands = [
+        'git config --global core.pager "diff-so-fancy | less --tabs=4 -RFX"',
+        'git config --global interactive.diffFilter "diff-so-fancy --patch"',
+        'git config --global color.ui true',
+        'git config --global color.diff-highlight.oldNormal    "red bold"',
+        'git config --global color.diff-highlight.oldHighlight "red bold 52"',
+        'git config --global color.diff-highlight.newNormal    "green bold"',
+        'git config --global color.diff-highlight.newHighlight "green bold 22"',
+        'git config --global color.diff.meta       "11"',
+        'git config --global color.diff.frag       "magenta bold"',
+        'git config --global color.diff.func       "146 bold"',
+        'git config --global color.diff.commit     "yellow bold"',
+        'git config --global color.diff.old        "red bold"',
+        'git config --global color.diff.new        "green bold"',
+        'git config --global color.diff.whitespace "red reverse"',
+    ]
+    for cmd in commands:
+        eval_os_cmd(cmd)
+
+
+def install_df():
+    if platform.system() == "Darwin":
+        if shutil.which("duf") is None:
+            eval_os_cmd("brew install duf")
+    elif platform.system() == "Linux":
+        if shutil.which("duf") is None:
+            eval_os_cmd("sudo apt install -y duf")
+    else:
+        raise ValueError(f"{platform.system()} is not supported")
+
+
+def install_fx():
+    if platform.system() == "Darwin":
+        if shutil.which("fx") is None:
+            eval_os_cmd("npm install -g duf")
+    elif platform.system() == "Linux":
+        if shutil.which("fx") is None:
+            eval_os_cmd("sudo npm install -g duf")
+    else:
+        raise ValueError(f"{platform.system()} is not supported")
+
+
 def install_zsh_plugins():
     install_git()
     zsh_folder = pathlib.Path.home() / ".zsh"
@@ -365,6 +418,7 @@ def generate_alaises(dot_folder, aliases):
         dircolors_cmd = "dircolors=dircolors"
         cat_cmd = "cat=cat"
         find_cmd = "find=find"
+        df_cmd = "df=duf"
         if platform.system() == "Darwin":
             dircolors_cmd = "dircolors=gdircolors"
             cat_cmd = "cat=bat"
@@ -373,11 +427,11 @@ def generate_alaises(dot_folder, aliases):
             dircolors_cmd = "dircolors=dircolors"
             cat_cmd = "cat=batcat"
             find_cmd = "find=fdfind"
-           
+
         ls_cmd = "ls=exa"
         src.write("\n".join([
-            f"alias {cmd}"
-            for cmd in aliases + [ls_cmd, dircolors_cmd, find_cmd, cat_cmd, grep_cmd]
+            f"alias {cmd}" for cmd in aliases +
+            [ls_cmd, dircolors_cmd, find_cmd, cat_cmd, grep_cmd, df_cmd]
         ]))
 
     if alias_conf_dst.exists():
@@ -438,6 +492,9 @@ def main():
     install_vim_plug()
     install_neovim()
     install_tmux()
+    install_diff()
+    install_df()
+    install_fx()
 
     bcdalias = install_bazel_compilation_database(dot_folder)
     generate_alaises(dot_folder, [bcdalias])
