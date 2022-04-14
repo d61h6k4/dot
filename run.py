@@ -305,6 +305,17 @@ def install_fx():
     else:
         raise ValueError(f"{platform.system()} is not supported")
 
+def install_tldr():
+    if platform.system() == "Darwin":
+        if shutil.which("tldr") is None:
+            eval_os_cmd("npm install -g tldr")
+    elif platform.system() == "Linux":
+        if shutil.which("tldr") is None:
+            eval_os_cmd("sudo npm install -g tldr")
+    else:
+        raise ValueError(f"{platform.system()} is not supported")
+
+
 
 def install_zsh_plugins():
     install_git()
@@ -495,6 +506,7 @@ def main():
     install_diff()
     install_df()
     install_fx()
+    install_tldr()
 
     bcdalias = install_bazel_compilation_database(dot_folder)
     generate_alaises(dot_folder, [bcdalias])
