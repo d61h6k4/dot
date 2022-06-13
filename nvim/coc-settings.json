@@ -5,7 +5,6 @@
   "diagnostic.warningSign": "⚠",
   "diagnostic.errorSign": "✖",
   "diagnostic.enable": true,
-  "diagnostic.highlightOffset": 9999999,
   "diagnostic.refreshOnInsertMode": true,
   "suggest.completionItemKindLabels": {
     "keyword": "\uf1de",
@@ -35,8 +34,15 @@
     "default": "\uf29c"
   },
   "python.pythonPath": "python",
-  "python.jediEnabled": false,
   "python.linting.pytypeEnabled": true,
+  "python.linting.pylintEnabled": true,
+  "python.linting.enabled": true,
+  "python.linting.pylintArgs": [
+      "--load-plugins",
+      "perflint",
+      "--rcfile",
+      "${workspaceFolder}/.pylintrc"
+  ],
   "clangd.enabled": true,
   "clangd.checkUpdates": true,
   "clangd.semanticHighlighting": true,

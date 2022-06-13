@@ -46,6 +46,7 @@ Plug 'vhdirk/vim-cmake'
 Plug 'antoyo/vim-licenses'
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+Plug 'nvim-treesitter/nvim-treesitter-context'
 
 call plug#end()
 
@@ -247,11 +248,11 @@ let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_er
 let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
 
 
-let g:licenses_copyright_holders_name = 'Petrov, Danil <ddbihbka@gmail.com>. All Rights Reserved.'
-let g:licenses_authors_name = 'Petrov, Danil <ddbihbka@gmail.com>'
+" let g:licenses_copyright_holders_name = 'Petrov, Danil <ddbihbka@gmail.com>. All Rights Reserved.'
+" let g:licenses_authors_name = 'Petrov, Danil <ddbihbka@gmail.com>'
 
-" let g:licenses_copyright_holders_name = 'Arrival Robotics Limited. All Rights Reserved.'
-" let g:licenses_authors_name = ''
+let g:licenses_copyright_holders_name = 'Arrival Robotics Limited. All Rights Reserved.'
+let g:licenses_authors_name = ''
 
 let g:licenses_default_commands = ['apache']
 
