@@ -298,10 +298,10 @@ def install_df():
 def install_fx():
     if platform.system() == "Darwin":
         if shutil.which("fx") is None:
-            eval_os_cmd("npm install -g duf")
+            eval_os_cmd("npm install -g fx")
     elif platform.system() == "Linux":
         if shutil.which("fx") is None:
-            eval_os_cmd("sudo npm install -g duf")
+            eval_os_cmd("sudo npm install -g fx")
     else:
         raise ValueError(f"{platform.system()} is not supported")
 

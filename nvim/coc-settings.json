@@ -34,6 +34,7 @@
     "default": "\uf29c"
   },
   "python.pythonPath": "python",
+  "python.formatting.provider": "black",
   "python.linting.pytypeEnabled": true,
   "python.linting.pylintEnabled": true,
   "python.linting.enabled": true,
